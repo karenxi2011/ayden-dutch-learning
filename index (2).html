@@ -1,0 +1,34 @@
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ayden Nederlands leren</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui,Arial;background:#f5f7fb;color:#263044}.w{max-width:760px;margin:auto;padding:18px}.c{background:#fff;border-radius:22px;padding:20px;box-shadow:0 5px 22px #0001}button{border:0;border-radius:14px;padding:13px;font-size:16px}.tabs{display:flex;gap:7px;flex-wrap:wrap}.tab{background:#edf1f7}.on{background:#263044;color:#fff}.listen{width:100%;background:#dfeaff;font-size:21px;margin:14px 0}.pic{text-align:center;background:#fff7df;border-radius:20px;padding:18px;font-size:68px}.ans{border:2px dashed #d9dfeb;border-radius:15px;padding:16px;text-align:center;font-size:21px;margin:12px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mic{background:#eee2ff}.other{background:#edf1f7}.result{display:none;padding:14px;border-radius:14px;margin:12px 0;line-height:1.5}.ok{display:block;background:#e2f6e8}.near{display:block;background:#fff3d3}.bad{display:block;background:#ffe4e4}.debug{display:block;background:#eef3ff;font-family:ui-monospace,monospace;font-size:12px;word-break:break-word}.small{font-size:14px;color:#6e798c;line-height:1.5}</style></head><body><div class="w">
+<h1>Ayden Nederlands leren</h1><p class="small">Luisteren · nazeggen · spreken · groep 3 · iPad testversie</p><div class="c">
+<div class="tabs"><button class="tab on" onclick="lvl(0,this)">Niveau 1 · ±5</button><button class="tab" onclick="lvl(1,this)">Niveau 2 · ±6</button><button class="tab" onclick="lvl(2,this)">Niveau 3 · ±7</button><button class="tab" onclick="lvl(3,this)">Niveau 4 · 8–9</button></div>
+<p id="cnt" class="small"></p><button class="listen" onclick="say()">🔊 Luister naar de zin</button><div id="pic" class="pic">👦 🧥</div><div id="ans" class="ans">Luister eerst. Zeg daarna de hele zin na.</div>
+<div class="grid"><button id="mic" class="mic" onclick="rec()">🎤 Spreek de zin na</button><button class="other" onclick="say()">🔁 Nog een keer</button><button class="other" onclick="show()">👀 Laat de zin zien</button><button class="other" onclick="next()">➡️ Volgende zin</button></div>
+<div id="res" class="result"></div><div id="dbg" class="result debug"></div>
+<p class="small"><b>Test:</b> druk op 🎤, zeg de zin en maak daarna een screenshot van het blauwe vak <b>Technische informatie</b> als er een fout verschijnt.</p>
+</div></div>
+<script>
+const S=[
+["De hond loopt snel naar huis.","Het meisje pakt haar rode jas.","De jongen leest een klein boek.","Mama zet het eten op tafel.","Papa maakt de grote deur open."],
+["De jongen pakt zijn blauwe jas.","Het meisje zoekt haar tas boven.","De hond loopt met papa buiten.","Mama legt het brood op tafel.","Hij zet zijn fiets bij school."],
+["De jongen legt zijn jas op de stoel.","Het meisje gaat met haar vader naar school.","De hond loopt achter de jongen naar huis.","Mama zet het warme eten op tafel.","Hij neemt zijn blauwe tas mee naar school."],
+["De jongen legt zijn blauwe jas op de stoel.","Het meisje gaat met haar vader naar de winkel.","Na school speelt hij met zijn vriend buiten.","De kleine hond loopt achter het meisje naar huis.","Zij pakt haar boek en legt het op tafel."]];
+let L=0,i=0;const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function upd(){cnt.textContent=`Zin ${i+1} van ${S[L].length}`;ans.textContent="Luister eerst. Zeg daarna de hele zin na.";res.className="result";dbg.className="result debug";dbg.style.display="none"}
+function say(){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(S[L][i]);u.lang="nl-NL";u.rate=.8;speechSynthesis.speak(u)}
+function show(){ans.textContent=S[L][i]}
+function env(extra){dbg.style.display="block";dbg.innerHTML="<b>Technische informatie</b><br>"+extra+"<br>SpeechRecognition: "+(SR?"ja":"nee")+"<br>Secure context: "+window.isSecureContext+"<br>Online: "+navigator.onLine+"<br>Browser: "+navigator.userAgent}
+function rec(){
+ if(!SR){res.className="result bad";res.textContent="Spraakherkenning wordt niet ondersteund.";env("Fout: SpeechRecognition unavailable");return}
+ let r=new SR();r.lang="nl-NL";r.interimResults=false;r.continuous=false;r.maxAlternatives=3;
+ mic.textContent="🔴 Ik luister...";
+ r.onstart=()=>env("Status: recognition started");
+ r.onaudiostart=()=>env("Status: audio started");
+ r.onspeechstart=()=>env("Status: speech detected");
+ r.onresult=e=>{let h=e.results[0][0].transcript;res.className="result ok";res.innerHTML="✅ <b>Ik hoorde:</b> "+h;env("Status: result received")};
+ r.onerror=e=>{res.className="result bad";res.innerHTML="⚠️ <b>Spraakherkenning fout.</b><br>Maak een screenshot van het blauwe vak hieronder.";env("Foutcode: "+e.error+"<br>Bericht: "+(e.message||"(geen bericht)"))};
+ r.onend=()=>{mic.textContent="🎤 Spreek de zin na"};
+ try{r.start()}catch(e){res.className="result bad";res.textContent="De herkenning kon niet starten.";env("Exception: "+e.name+" — "+e.message)}
+}
+function next(){i=(i+1)%S[L].length;upd()}function lvl(n,b){L=n;i=0;document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");upd()}upd();
+</script></body></html>
