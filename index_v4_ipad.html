@@ -1,0 +1,83 @@
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f7fb"><title>Ayden Nederlands leren</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#263044}
+.w{max-width:760px;margin:auto;padding:18px}h1{font-size:28px;margin:5px 0}.small{font-size:14px;color:#6d788b;line-height:1.5}
+.c{background:#fff;border-radius:22px;padding:20px;box-shadow:0 5px 22px #0001}button{border:0;border-radius:14px;padding:13px;font-size:16px;cursor:pointer}
+.tabs{display:flex;gap:7px;flex-wrap:wrap}.tab{background:#edf1f7}.on{background:#263044;color:#fff}.listen{width:100%;background:#dfeaff;font-size:21px;margin:14px 0}
+.pic{text-align:center;background:#fff7df;border-radius:20px;padding:18px;font-size:68px;min-height:110px}.ans{border:2px dashed #d9dfeb;border-radius:15px;padding:16px;text-align:center;font-size:21px;margin:12px 0;min-height:60px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.record{background:#eee2ff}.record.active{background:#ffdfe4}.other{background:#edf1f7}
+.status{padding:14px;border-radius:14px;margin:12px 0;background:#eef3ff;line-height:1.5}.ok{background:#e2f6e8}.near{background:#fff3d3}.bad{background:#ffe4e4}
+.progress{height:10px;background:#e9edf4;border-radius:20px;overflow:hidden;margin-top:14px}#bar{height:100%;background:#66738b;width:0}.hide{display:none}
+</style></head><body><div class="w"><h1>Ayden Nederlands leren</h1><p class="small">Luisteren · nazeggen · lokale spraakherkenning · groep 3 · versie 4</p><div class="c">
+<div class="tabs"><button class="tab on" onclick="setLevel(0,this)">Niveau 1 · ±5</button><button class="tab" onclick="setLevel(1,this)">Niveau 2 · ±6</button><button class="tab" onclick="setLevel(2,this)">Niveau 3 · ±7</button><button class="tab" onclick="setLevel(3,this)">Niveau 4 · 8–9</button></div>
+<p id="count" class="small"></p><button class="listen" onclick="speak()">🔊 Luister naar de zin</button><div id="pic" class="pic"></div><div id="answer" class="ans">Luister eerst. Zeg daarna de hele zin na.</div>
+<div class="grid"><button id="record" class="record" onclick="toggleRecord()">🎤 Start opname</button><button class="other" onclick="speak()">🔁 Nog een keer</button><button class="other" onclick="showAnswer()">👀 Laat de zin zien</button><button class="other" onclick="next()">➡️ Volgende zin</button></div>
+<div id="status" class="status">💡 De eerste keer moet het spraakmodel worden gedownload. Dit kan even duren.</div><div class="progress"><div id="bar"></div></div><p id="stats" class="small"></p>
+<p class="small"><b>Privacy:</b> de herkenning draait in de browser. Er is geen eigen API-sleutel of betaalde server nodig. Het model wordt bij de eerste keer via internet geladen en daarna kan de browser het cachen.</p>
+</div></div>
+<script type="module">
+import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0';
+const S=[[["De hond loopt snel naar huis.", "🐕 🏠"], ["Het meisje pakt haar rode jas.", "👧 🧥"], ["De jongen leest een klein boek.", "👦 📖"], ["Mama zet het eten op tafel.", "👩 🍽️"], ["Papa maakt de grote deur open.", "👨 🚪"], ["Het kind speelt met de bal.", "🧒 ⚽"], ["Zij zoekt haar tas in huis.", "👧 🎒"], ["Hij pakt zijn fiets uit de schuur.", "👦 🚲"], ["De kat ligt op het bed.", "🐈 🛏️"], ["De jongen doet zijn schoenen aan.", "👦 👟"]], [["De jongen pakt zijn blauwe jas.", "👦 🧥"], ["Het meisje zoekt haar tas boven.", "👧 🎒"], ["De hond loopt met papa buiten.", "🐕 👨 🌳"], ["Mama legt het brood op tafel.", "👩 🍞"], ["Hij zet zijn fiets bij school.", "👦 🚲 🏫"], ["Zij leest haar boek op bed.", "👧 📖 🛏️"], ["Het kind drinkt water uit een glas.", "🧒 🥛"], ["De kat slaapt onder de stoel.", "🐈 🪑"], ["De jongen speelt met zijn vriend.", "👦 👦"], ["Het meisje gaat met mama fietsen.", "👧 👩 🚲"]], [["De jongen legt zijn jas op de stoel.", "👦 🧥 🪑"], ["Het meisje gaat met haar vader naar school.", "👧 👨 🏫"], ["De hond loopt achter de jongen naar huis.", "🐕 👦 🏠"], ["Mama zet het warme eten op tafel.", "👩 🍲"], ["Hij neemt zijn blauwe tas mee naar school.", "👦 🎒 🏫"], ["Zij legt haar schoenen naast het bed.", "👧 👟 🛏️"], ["De jongen geeft zijn vriend een rode bal.", "👦 👦 ⚽"], ["Papa maakt een boterham voor het kind.", "👨 🍞 🧒"], ["Mama hangt haar jas aan de kapstok.", "👩 🧥"], ["Zij loopt met haar hond door het park.", "👧 🐕 🌳"]], [["De jongen legt zijn blauwe jas op de stoel.", "👦 🧥 🪑"], ["Het meisje gaat met haar vader naar de winkel.", "👧 👨 🏪"], ["Na school speelt hij met zijn vriend buiten.", "🏫 👦 👦 🌳"], ["De kleine hond loopt achter het meisje naar huis.", "🐕 👧 🏠"], ["Zij pakt haar boek en legt het op tafel.", "👧 📖"], ["Hij neemt zijn tas mee naar de grote school.", "👦 🎒 🏫"], ["Het meisje zet haar schoenen naast het grote bed.", "👧 👟 🛏️"], ["De jongen leest een boek voordat hij gaat slapen.", "👦 📖 🛏️"], ["Zij loopt met haar moeder naar de kleine winkel.", "👧 👩 🏪"], ["Het kind legt het speelgoed terug in de kast.", "🧒 🧸"]]];let L=0,i=0,good=0,done=0,recorder=null,chunks=[],stream=null,transcriber=null,loading=false;
+const $=x=>document.getElementById(x);
+function cur(){return S[L][i]}
+function norm(s){return s.toLowerCase().replace(/[.,!?;:]/g,'').replace(/\s+/g,' ').trim()}
+function words(s){return norm(s).split(' ').filter(Boolean)}
+function distance(a,b){let d=Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));for(let x=0;x<=a.length;x++)d[x][0]=x;for(let y=0;y<=b.length;y++)d[0][y]=y;for(let x=1;x<=a.length;x++)for(let y=1;y<=b.length;y++)d[x][y]=Math.min(d[x-1][y]+1,d[x][y-1]+1,d[x-1][y-1]+(a[x-1]===b[y-1]?0:1));return d[a.length][b.length]}
+function update(){$('count').textContent=`Zin ${i+1} van ${S[L].length}`;$('pic').textContent=cur()[1];$('answer').textContent='Luister eerst. Zeg daarna de hele zin na.';$('stats').textContent=`Vandaag: ${good} goed · ${done} / ${S[L].length}`;$('bar').style.width=(done/S[L].length*100)+'%'}
+window.speak=()=>{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(cur()[0]);u.lang='nl-NL';u.rate=.8;speechSynthesis.speak(u)};
+window.showAnswer=()=>{$('answer').textContent=cur()[0]};
+window.next=()=>{i=(i+1)%S[L].length;update()};
+window.setLevel=(n,b)=>{L=n;i=good=done=0;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');update()};
+
+async function loadModel(){
+ if(transcriber||loading)return; loading=true;$('status').className='status';$('status').innerHTML='⬇️ <b>Spraakmodel laden…</b><br>De eerste keer kan dit een paar minuten duren.';
+ try{
+   // Multilingual Whisper. WASM/default backend is intentional for broad Safari compatibility.
+   transcriber=await pipeline(
+     'automatic-speech-recognition',
+     'onnx-community/whisper-tiny',
+     {
+       device: 'wasm',
+       dtype: {
+         encoder_model: 'q8',
+         decoder_model_merged: 'q8'
+       }
+     }
+   );
+   $('status').className='status ok';$('status').innerHTML='✅ <b>Spraakmodel klaar.</b> Je kunt nu opnemen.';
+ }catch(e){$('status').className='status bad';$('status').innerHTML='⚠️ Het spraakmodel kon niet worden geladen.<br>'+e.message}
+ loading=false;
+}
+async function blobTo16k(blob){
+ const ab=await blob.arrayBuffer();const ctx=new (window.AudioContext||window.webkitAudioContext)();const buf=await ctx.decodeAudioData(ab);
+ const sr=buf.sampleRate,len=Math.ceil(buf.duration*16000),out=new Float32Array(len),ch=buf.getChannelData(0);
+ for(let n=0;n<len;n++){let pos=n*sr/16000,lo=Math.floor(pos),hi=Math.min(lo+1,ch.length-1),f=pos-lo;out[n]=ch[lo]*(1-f)+ch[hi]*f}
+ await ctx.close();return out;
+}
+async function transcribe(blob){
+ await loadModel();if(!transcriber)return;
+ $('status').className='status';$('status').innerHTML='🧠 <b>Even luisteren…</b> De zin wordt lokaal herkend.';
+ try{
+   const audio=await blobTo16k(blob);
+   const out=await transcriber(audio,{language:'nl',task:'transcribe'});
+   const heard=(out.text||'').trim(),a=words(heard),b=words(cur()[0]),score=1-distance(a,b)/Math.max(a.length,b.length,1);
+   if(score>=.84){good++;done++;$('status').className='status ok';$('status').innerHTML=`✅ <b>Heel goed!</b><br>Ik hoorde: ${heard}`;setTimeout(()=>{i=(i+1)%S[L].length;update()},1800)}
+   else if(score>=.62){$('status').className='status near';$('status').innerHTML=`🟠 <b>Bijna goed!</b><br>Ik hoorde: ${heard}<br>Luister nog een keer.`}
+   else {$('status').className='status bad';$('status').innerHTML=`🔁 <b>Probeer het nog een keer.</b><br>Ik hoorde: ${heard||'(niets)'}`}
+   $('stats').textContent=`Vandaag: ${good} goed · ${done} / ${S[L].length}`;$('bar').style.width=(done/S[L].length*100)+'%';
+ }catch(e){$('status').className='status bad';$('status').innerHTML='⚠️ Herkenning mislukt.<br>'+e.message}
+}
+window.toggleRecord=async()=>{
+ if(recorder&&recorder.state==='recording'){recorder.stop();$('record').classList.remove('active');$('record').textContent='🎤 Start opname';return}
+ try{
+   await loadModel();
+   stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];
+   recorder=new MediaRecorder(stream);
+   recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+   recorder.onstop=async()=>{stream.getTracks().forEach(t=>t.stop());let blob=new Blob(chunks,{type:recorder.mimeType});await transcribe(blob)};
+   recorder.start();$('record').classList.add('active');$('record').textContent='⏹ Stop opname';$('status').className='status';$('status').innerHTML='🔴 <b>Ik luister…</b> Zeg de hele zin en druk daarna op stop.';
+ }catch(e){$('status').className='status bad';$('status').innerHTML='⚠️ Opnemen lukt niet.<br>'+e.message}
+};
+update();
+</script></body></html>
