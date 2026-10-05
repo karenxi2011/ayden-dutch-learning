@@ -1,0 +1,31 @@
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ayden Nederlands leren | Luisteren en zinnen nazeggen</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#263044}
+.wrap{max-width:760px;margin:auto;padding:20px}h1{font-size:28px;margin:6px 0}.sub{color:#68758b;margin-top:0}
+.card{background:white;border-radius:22px;padding:22px;box-shadow:0 5px 22px #1d2b4a14}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}button{border:0;border-radius:14px;padding:13px 15px;font-size:16px;cursor:pointer}
+.tab{background:#edf1f7}.tab.on{background:#263044;color:#fff}.listen{width:100%;background:#dfeaff;font-size:22px;margin:15px 0}
+.pic{background:#fff7df;border-radius:20px;text-align:center;padding:18px 10px;margin:10px 0}.emoji{font-size:72px;line-height:1.2;min-height:86px}
+.key{font-size:18px;font-weight:650;margin-top:8px}.answer{min-height:62px;border:2px dashed #d9dfeb;border-radius:15px;padding:16px;text-align:center;font-size:22px;margin:12px 0}
+.muted{color:#8b95a8}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.show{background:#edf1f7}.good{background:#ddf5e5}.again{background:#fff0df}
+.progress{height:11px;background:#e9edf4;border-radius:99px;overflow:hidden;margin-top:18px}.bar{height:100%;background:#65728a;width:0}
+.stats{display:flex;justify-content:space-between;color:#6f7a8e;font-size:14px;margin-top:8px}.tip{background:#f7f9fc;border-radius:14px;padding:13px;margin-top:18px;font-size:14px;line-height:1.55}
+</style></head><body><div class="wrap"><h1>Ayden Nederlands leren</h1><p class="sub">Luisteren en zinnen nazeggen · groep 3</p><div class="card">
+<div class="tabs"><button class="tab on" onclick="setLevel(1,this)">Niveau 1 · 4–5 woorden</button><button class="tab" onclick="setLevel(2,this)">Niveau 2 · 5–7 woorden</button><button class="tab" onclick="setLevel(3,this)">Niveau 3 · 7–10 woorden</button></div>
+<p id="counter" class="sub"></p><button class="listen" onclick="speak()">🔊 Luister naar de zin</button>
+<div class="pic"><div id="emoji" class="emoji"></div><div id="key" class="key"></div></div>
+<div id="answer" class="answer muted">Luister eerst. Zeg daarna de hele zin na.</div>
+<div class="grid"><button class="show" onclick="showAnswer()">👀 Laat de zin zien</button><button class="show" onclick="speak()">🔁 Nog een keer</button><button class="good" onclick="rate(true)">✓ Goed!</button><button class="again" onclick="rate(false)">↻ Nog oefenen</button></div>
+<div class="progress"><div id="bar" class="bar"></div></div><div class="stats"><span id="score"></span><span id="done"></span></div>
+<div class="tip"><b>Vandaag oefenen:</b> luister → onthoud de hele zin → zeg hem in dezelfde volgorde na.<br>Let extra op <b>de / het</b>, <b>hij / zij</b> en <b>zijn / haar</b>.<br><br><b>Voor mama/papa:</b> laat de geschreven zin pas na het nazeggen zien. Mist Ayden een woord? Zeg: <b>“Luister nog een keer.”</b></div>
+</div></div>
+<script>
+const S={"1": [["De hond loopt buiten.", "🐕", "hond • buiten"], ["Het kind leest een boek.", "🧒📖", "kind • boek"], ["Hij pakt zijn jas.", "👦🧥", "hij • zijn jas"], ["Zij zoekt haar tas.", "👧🎒", "zij • haar tas"], ["De kat zit binnen.", "🐈🏠", "kat • binnen"], ["Het meisje drinkt melk.", "👧🥛", "meisje • melk"], ["De jongen opent de deur.", "👦🚪", "jongen • deur"], ["Het boek ligt op tafel.", "📖🪑", "boek • tafel"], ["Hij ziet zijn fiets.", "👦🚲", "hij • zijn fiets"], ["Zij pakt haar boek.", "👧📖", "zij • haar boek"]], "2": [["De jongen speelt met zijn bal.", "👦⚽", "jongen • zijn bal"], ["Het meisje pakt haar rode jas.", "👧🧥", "meisje • haar jas"], ["De hond loopt naar het huis.", "🐕🏠", "hond • huis"], ["Hij legt het boek op tafel.", "👦📖", "hij • boek • tafel"], ["Zij gaat met haar moeder naar school.", "👧👩🏫", "zij • haar moeder • school"], ["Het kleine kind zit op de stoel.", "🧒🪑", "kind • stoel"], ["De jongen zoekt zijn blauwe fiets.", "👦🚲", "jongen • zijn fiets"], ["Het meisje leest haar nieuwe boek.", "👧📖", "meisje • haar boek"], ["Hij loopt met de hond naar buiten.", "👦🐕🌳", "hij • hond • buiten"], ["Zij zet het glas op tafel.", "👧🥛", "zij • glas • tafel"]], "3": [["De jongen legt zijn blauwe jas op de stoel.", "👦🧥🪑", "jongen • zijn jas • stoel"], ["Het meisje gaat met haar vader naar de winkel.", "👧👨🏪", "meisje • haar vader • winkel"], ["Na school speelt hij met zijn vriend in de tuin.", "🏫👦👦🌳", "school • zijn vriend • tuin"], ["De kleine hond loopt achter het meisje naar huis.", "🐕👧🏠", "hond • meisje • huis"], ["Zij pakt haar boek en legt het op tafel.", "👧📖", "zij • haar boek • tafel"], ["Hij neemt zijn tas mee naar de grote school.", "👦🎒🏫", "hij • zijn tas • school"], ["Het meisje zet haar schoenen naast het bed.", "👧👟🛏️", "meisje • haar schoenen • bed"], ["De jongen leest een boek voordat hij gaat slapen.", "👦📖🛏️", "jongen • boek • slapen"], ["Zij loopt met haar moeder naar de kleine winkel.", "👧👩🏪", "zij • haar moeder • winkel"], ["Het kind legt het speelgoed terug in de kast.", "🧒🧸🚪", "kind • speelgoed • kast"]]}; let L=1,i=0,correct=0,done=0;
+function cur(){return S[L][i]}
+function update(){counter.textContent=`Zin ${i+1} van ${S[L].length}`;emoji.textContent=cur()[1];key.textContent=cur()[2];answer.textContent="Luister eerst. Zeg daarna de hele zin na.";answer.classList.add("muted");score.textContent=`Vandaag: ${correct} goed`;document.getElementById("done").textContent=`${done} / ${S[L].length}`;bar.style.width=(done/S[L].length*100)+"%"}
+function speak(){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(cur()[0]);u.lang="nl-NL";u.rate=.8;let v=speechSynthesis.getVoices().find(x=>x.lang&&x.lang.toLowerCase().startsWith("nl"));if(v)u.voice=v;speechSynthesis.speak(u)}
+function showAnswer(){answer.textContent=cur()[0];answer.classList.remove("muted")}
+function rate(ok){if(ok)correct++;done=Math.min(done+1,S[L].length);i=(i+1)%S[L].length;update();if(done===S[L].length)setTimeout(()=>alert(`Klaar! ${correct} van de ${S[L].length} goed. Goed gedaan!`),100)}
+function setLevel(n,b){L=n;i=0;correct=0;done=0;document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");update()} update();
+</script></body></html>
