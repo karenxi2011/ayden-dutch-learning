@@ -4,131 +4,264 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f5f7fb">
-<title>Ayden Nederlands leren</title>
+<title>Ayden Nederlands oefenen</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#263044}
-.w{max-width:760px;margin:auto;padding:18px}
-h1{font-size:28px;margin:4px 0}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#273142}
+.wrap{max-width:880px;margin:auto;padding:16px}
+h1{font-size:28px;margin:2px 0 4px}
+h2{font-size:22px;margin:4px 0 12px}
+h3{font-size:18px;margin:18px 0 8px}
 .small{font-size:13px;color:#6d788b;line-height:1.5}
-.c{background:#fff;border-radius:22px;padding:20px;box-shadow:0 5px 22px #0001}
-button,input{font:inherit}
-button{border:0;border-radius:14px;padding:13px;font-size:16px;cursor:pointer}
-button:disabled{opacity:.55}
-.tabs{display:flex;gap:7px;flex-wrap:wrap}
-.tab{background:#edf1f7}
-.on{background:#263044;color:#fff}
-.listen{width:100%;background:#dfeaff;font-size:21px;margin:14px 0}
-.pic{text-align:center;background:#fff7df;border-radius:20px;padding:18px;font-size:68px;min-height:110px}
-.ans{border:2px dashed #d9dfeb;border-radius:15px;padding:16px;text-align:center;font-size:21px;margin:12px 0;min-height:60px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.record{background:#eee2ff}
-.record.active{background:#ffdfe4}
-.other{background:#edf1f7}
-.status{padding:14px;border-radius:14px;margin:12px 0;background:#eef3ff;line-height:1.5}
-.ok{background:#e2f6e8}
-.near{background:#fff3d3}
-.bad{background:#ffe4e4}
-.progress{height:10px;background:#e9edf4;border-radius:20px;overflow:hidden;margin-top:14px}
-#bar{height:100%;background:#66738b;width:0}
-.settings{margin-top:16px;border-top:1px solid #e6eaf0;padding-top:14px}
-.settings summary{cursor:pointer;color:#6d788b;font-size:13px}
-.setup{margin-top:10px;background:#f7f8fb;border-radius:14px;padding:12px}
-.setup input{width:100%;padding:11px;border:1px solid #ccd4e0;border-radius:10px;margin:8px 0}
-.setup button{background:#263044;color:white;width:100%}
-.diff{margin-top:7px;font-size:15px}
-.missing{font-weight:700}
+.main-tabs{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.main-tabs button,.btn{border:0;border-radius:14px;padding:12px 15px;font-size:16px;cursor:pointer}
+.main-tabs button{background:#e9edf5}
+.main-tabs button.active{background:#273142;color:white}
+.card{background:white;border-radius:22px;padding:18px;box-shadow:0 5px 22px #00000010}
+.note{background:#fff7df;border-radius:14px;padding:12px 14px;margin:10px 0 14px;line-height:1.45}
+.vocab{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.vocab div{padding:10px;border-radius:12px;text-align:center;font-weight:700}
+.v1{background:#e9f4ff} .v2{background:#eef8e7} .v3{background:#fff0f4}
+.clothes-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cloth-card{border:2px solid #e8edf4;border-radius:18px;padding:12px;background:#fbfcfe}
+.cloth-title{font-weight:800;font-size:18px;text-align:center;margin:6px 0 8px}
+.cloth-sent{font-size:15px;line-height:1.42;background:white;border-radius:12px;padding:9px 10px;margin-top:7px}
+.cloth-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.cloth-actions button{border:0;border-radius:12px;padding:9px;font-size:14px;background:#e9efff}
+.svgbox{height:145px;display:flex;align-items:center;justify-content:center}
+.svgbox svg{width:125px;height:135px;filter:drop-shadow(0 3px 2px #00000015)}
+.practice{margin-top:18px;background:#f9fbff;border:2px solid #e3eaf7;border-radius:20px;padding:15px}
+.people{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.person{background:white;border-radius:16px;padding:10px;text-align:center}
+.person-emoji{font-size:44px;line-height:1}
+.person .svgbox{height:130px}
+.combo-sentence{font-size:21px;font-weight:700;line-height:1.45;text-align:center;background:white;border-radius:14px;padding:14px;margin:12px 0}
+.combo-buttons{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.listen{background:#dfeaff} .show{background:#fff1cc} .next{background:#e8f7e6}
 .hide{display:none}
+/* old practice */
+.levels{display:flex;gap:7px;flex-wrap:wrap}
+.levels button{border:0;border-radius:12px;padding:9px 11px;background:#edf1f7}
+.levels button.on{background:#273142;color:white}
+.old-listen{width:100%;border:0;border-radius:14px;padding:13px;background:#dfeaff;font-size:19px;margin:12px 0}
+.old-pic{text-align:center;background:#fff7df;border-radius:18px;padding:16px;font-size:60px}
+.old-answer{border:2px dashed #d9dfeb;border-radius:14px;padding:14px;text-align:center;font-size:19px;margin:10px 0}
+.old-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.old-grid button{border:0;border-radius:12px;padding:11px;background:#edf1f7}
+.status{padding:11px;border-radius:12px;background:#eef3ff;margin-top:10px}
+@media(max-width:640px){
+ .clothes-grid{grid-template-columns:1fr}
+ .combo-buttons{grid-template-columns:1fr}
+ .vocab{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
-<div class="w">
-<h1>Ayden Nederlands leren</h1>
-<p class="small">Luisteren · zinnen nazeggen · groep 3</p>
+<div class="wrap">
+<h1>Ayden Nederlands oefenen</h1>
+<p class="small">Luisteren · woorden · zinnen nazeggen · groep 3</p>
 
-<div class="c">
-<div class="tabs">
-<button class="tab on" onclick="setLevel(0,this)">Niveau 1 · ±5</button>
-<button class="tab" onclick="setLevel(1,this)">Niveau 2 · ±6</button>
-<button class="tab" onclick="setLevel(2,this)">Niveau 3 · ±7</button>
-<button class="tab" onclick="setLevel(3,this)">Niveau 4 · 8–9</button>
+<div class="main-tabs">
+<button id="tabClothes" class="active" onclick="showModule('clothes')">👕 Kleding oefenen</button>
+<button id="tabOld" onclick="showModule('old')">🗣️ Andere zinnen</button>
 </div>
 
-<p id="count" class="small"></p>
-<button class="listen" onclick="speak()">🔊 Luister naar de zin</button>
-<div id="pic" class="pic"></div>
-<div id="answer" class="ans">Luister eerst. Zeg daarna de hele zin na.</div>
-
-<div class="grid">
-<button class="record" onclick="markGood()">✅ Goed gedaan</button>
-<button class="other" onclick="speak()">🔁 Nog een keer</button>
-<button class="other" onclick="showAnswer()">👀 Laat de zin zien</button>
-<button class="other" onclick="next()">➡️ Volgende zin</button>
+<section id="clothesModule">
+<div class="card">
+<h2>👕 Kleding oefenen</h2>
+<div class="note">
+<b>Vandaag oefenen:</b><br>
+Hij doet de ... aan.<br>
+Zij doet de ... aan.<br><br>
+Daarna: <b>Hij doet de ... aan en zij doet de ... aan.</b>
 </div>
 
-<div id="status" class="status">💡 Luister goed en zeg de hele zin hardop na.</div>
-<div class="progress"><div id="bar"></div></div>
-<p id="stats" class="small"></p>
-
-
-
-<p class="small">Geen opname, geen microfoon en geen account nodig.</p>
-</div>
+<div class="vocab">
+<div class="v1">● ● ● &nbsp; gestipte</div>
+<div class="v2">//// &nbsp; gestreepte</div>
+<div class="v3">🌸 🌸 &nbsp; gebloemde</div>
 </div>
 
+<h3>1. Leer elke kaart</h3>
+<p class="small">Tik op 👦 of 👧. Ayden hoort dan de hele zin.</p>
+<div id="clothesGrid" class="clothes-grid"></div>
+
+<div class="practice">
+<h3 style="margin-top:0">2. Maak een lange zin</h3>
+<p class="small">Kijk eerst naar de twee kledingstukken. Zeg de hele zin hardop. Daarna kun je luisteren.</p>
+<div class="people">
+<div class="person">
+<div class="person-emoji">👦</div>
+<div id="boyPic" class="svgbox"></div>
+<div id="boyWord" class="cloth-title"></div>
+</div>
+<div class="person">
+<div class="person-emoji">👧</div>
+<div id="girlPic" class="svgbox"></div>
+<div id="girlWord" class="cloth-title"></div>
+</div>
+</div>
+<div id="comboSentence" class="combo-sentence">Zeg eerst zelf de hele zin.</div>
+<div class="combo-buttons">
+<button class="btn listen" onclick="speakCombo()">🔊 Luister</button>
+<button class="btn show" onclick="showCombo()">👀 Laat de zin zien</button>
+<button class="btn next" onclick="newCombo()">🔄 Nieuwe combinatie</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="oldModule" class="hide">
+<div class="card">
+<h2>🗣️ Andere zinnen</h2>
+<div class="levels">
+<button class="on" onclick="setOldLevel(0,this)">Niveau 1 · ±5</button>
+<button onclick="setOldLevel(1,this)">Niveau 2 · ±6</button>
+<button onclick="setOldLevel(2,this)">Niveau 3 · ±7</button>
+<button onclick="setOldLevel(3,this)">Niveau 4 · 8–9</button>
+</div>
+<p id="oldCount" class="small"></p>
+<button class="old-listen" onclick="speakOld()">🔊 Luister naar de zin</button>
+<div id="oldPic" class="old-pic"></div>
+<div id="oldAnswer" class="old-answer">Luister eerst. Zeg daarna de hele zin na.</div>
+<div class="old-grid">
+<button onclick="speakOld()">🔁 Nog een keer</button>
+<button onclick="showOld()">👀 Laat de zin zien</button>
+<button onclick="nextOld()">➡️ Volgende zin</button>
+<button onclick="markOld()">✅ Goed gedaan</button>
+</div>
+<div id="oldStatus" class="status">💡 Luister goed en zeg de hele zin hardop na.</div>
+</div>
+</section>
+</div>
 
 <script>
-const S=[[["De hond loopt snel naar huis.", "🐕 🏠"], ["Het meisje pakt haar rode jas.", "👧 🧥"], ["De jongen leest een klein boek.", "👦 📖"], ["Mama zet het eten op tafel.", "👩 🍽️"], ["Papa maakt de grote deur open.", "👨 🚪"], ["Het kind speelt met de bal.", "🧒 ⚽"], ["Zij zoekt haar tas in huis.", "👧 🎒"], ["Hij pakt zijn fiets uit de schuur.", "👦 🚲"], ["De kat ligt op het bed.", "🐈 🛏️"], ["De jongen doet zijn schoenen aan.", "👦 👟"]], [["De jongen pakt zijn blauwe jas.", "👦 🧥"], ["Het meisje zoekt haar tas boven.", "👧 🎒"], ["De hond loopt met papa buiten.", "🐕 👨 🌳"], ["Mama legt het brood op tafel.", "👩 🍞"], ["Hij zet zijn fiets bij school.", "👦 🚲 🏫"], ["Zij leest haar boek op bed.", "👧 📖 🛏️"], ["Het kind drinkt water uit een glas.", "🧒 🥛"], ["De kat slaapt onder de stoel.", "🐈 🪑"], ["De jongen speelt met zijn vriend.", "👦 👦"], ["Het meisje gaat met mama fietsen.", "👧 👩 🚲"]], [["De jongen legt zijn jas op de stoel.", "👦 🧥 🪑"], ["Het meisje gaat met haar vader naar school.", "👧 👨 🏫"], ["De hond loopt achter de jongen naar huis.", "🐕 👦 🏠"], ["Mama zet het warme eten op tafel.", "👩 🍲"], ["Hij neemt zijn blauwe tas mee naar school.", "👦 🎒 🏫"], ["Zij legt haar schoenen naast het bed.", "👧 👟 🛏️"], ["De jongen geeft zijn vriend een rode bal.", "👦 👦 ⚽"], ["Papa maakt een boterham voor het kind.", "👨 🍞 🧒"], ["Mama hangt haar jas aan de kapstok.", "👩 🧥"], ["Zij loopt met haar hond door het park.", "👧 🐕 🌳"]], [["De jongen legt zijn blauwe jas op de stoel.", "👦 🧥 🪑"], ["Het meisje gaat met haar vader naar de winkel.", "👧 👨 🏪"], ["Na school speelt hij met zijn vriend buiten.", "🏫 👦 👦 🌳"], ["De kleine hond loopt achter het meisje naar huis.", "🐕 👧 🏠"], ["Zij pakt haar boek en legt het op tafel.", "👧 📖"], ["Hij neemt zijn tas mee naar de grote school.", "👦 🎒 🏫"], ["Het meisje zet haar schoenen naast het grote bed.", "👧 👟 🛏️"], ["De jongen leest een boek voordat hij gaat slapen.", "👦 📖 🛏️"], ["Zij loopt met haar moeder naar de kleine winkel.", "👧 👩 🏪"], ["Het kind legt het speelgoed terug in de kast.", "🧒 🧸"]]];
-let L=0,i=0,good=0,done=0;
+const CLOTHES=[{"id": "jas_stip", "type": "jas", "pattern": "gestipte", "label": "de gestipte jas", "color": "#ee7da6"}, {"id": "jas_streep", "type": "jas", "pattern": "gestreepte", "label": "de gestreepte jas", "color": "#e85d63"}, {"id": "jas_bloem", "type": "jas", "pattern": "gebloemde", "label": "de gebloemde jas", "color": "#7fcf7a"}, {"id": "broek_stip", "type": "broek", "pattern": "gestipte", "label": "de gestipte broek", "color": "#f0d84a"}, {"id": "broek_streep", "type": "broek", "pattern": "gestreepte", "label": "de gestreepte broek", "color": "#f19a56"}, {"id": "broek_bloem", "type": "broek", "pattern": "gebloemde", "label": "de gebloemde broek", "color": "#54c3b8"}, {"id": "trui_stip", "type": "trui", "pattern": "gestipte", "label": "de gestipte trui", "color": "#59a9d8"}, {"id": "trui_streep", "type": "trui", "pattern": "gestreepte", "label": "de gestreepte trui", "color": "#94c44b"}, {"id": "trui_bloem", "type": "trui", "pattern": "gebloemde", "label": "de gebloemde trui", "color": "#b5c7de"}, {"id": "jurk_stip", "type": "jurk", "pattern": "gestipte", "label": "de gestipte jurk", "color": "#3da7d6"}, {"id": "jurk_streep", "type": "jurk", "pattern": "gestreepte", "label": "de gestreepte jurk", "color": "#aa7ad8"}, {"id": "jurk_bloem", "type": "jurk", "pattern": "gebloemde", "label": "de gebloemde jurk", "color": "#8f79c8"}];
+const OLD=[[["De hond loopt snel naar huis.", "🐕 🏠"], ["Het meisje pakt haar rode jas.", "👧 🧥"], ["De jongen leest een klein boek.", "👦 📖"], ["Mama zet het eten op tafel.", "👩 🍽️"], ["Papa maakt de grote deur open.", "👨 🚪"], ["Het kind speelt met de bal.", "🧒 ⚽"], ["Zij zoekt haar tas in huis.", "👧 🎒"], ["Hij pakt zijn fiets uit de schuur.", "👦 🚲"], ["De kat ligt op het bed.", "🐈 🛏️"], ["De jongen doet zijn schoenen aan.", "👦 👟"]], [["De jongen pakt zijn blauwe jas.", "👦 🧥"], ["Het meisje zoekt haar tas boven.", "👧 🎒"], ["De hond loopt met papa buiten.", "🐕 👨 🌳"], ["Mama legt het brood op tafel.", "👩 🍞"], ["Hij zet zijn fiets bij school.", "👦 🚲 🏫"], ["Zij leest haar boek op bed.", "👧 📖 🛏️"], ["Het kind drinkt water uit een glas.", "🧒 🥛"], ["De kat slaapt onder de stoel.", "🐈 🪑"], ["De jongen speelt met zijn vriend.", "👦 👦"], ["Het meisje gaat met mama fietsen.", "👧 👩 🚲"]], [["De jongen legt zijn jas op de stoel.", "👦 🧥 🪑"], ["Het meisje gaat met haar vader naar school.", "👧 👨 🏫"], ["De hond loopt achter de jongen naar huis.", "🐕 👦 🏠"], ["Mama zet het warme eten op tafel.", "👩 🍲"], ["Hij neemt zijn blauwe tas mee naar school.", "👦 🎒 🏫"], ["Zij legt haar schoenen naast het bed.", "👧 👟 🛏️"], ["De jongen geeft zijn vriend een rode bal.", "👦 👦 ⚽"], ["Papa maakt een boterham voor het kind.", "👨 🍞 🧒"], ["Mama hangt haar jas aan de kapstok.", "👩 🧥"], ["Zij loopt met haar hond door het park.", "👧 🐕 🌳"]], [["De jongen legt zijn blauwe jas op de stoel.", "👦 🧥 🪑"], ["Het meisje gaat met haar vader naar de winkel.", "👧 👨 🏪"], ["Na school speelt hij met zijn vriend buiten.", "🏫 👦 👦 🌳"], ["De kleine hond loopt achter het meisje naar huis.", "🐕 👧 🏠"], ["Zij pakt haar boek en legt het op tafel.", "👧 📖"], ["Hij neemt zijn tas mee naar de grote school.", "👦 🎒 🏫"], ["Het meisje zet haar schoenen naast het grote bed.", "👧 👟 🛏️"], ["De jongen leest een boek voordat hij gaat slapen.", "👦 📖 🛏️"], ["Zij loopt met haar moeder naar de kleine winkel.", "👧 👩 🏪"], ["Het kind legt het speelgoed terug in de kast.", "🧒 🧸"]]];
+let oldL=0, oldI=0;
+let boyItem=null, girlItem=null;
 
-const $=x=>document.getElementById(x);
-function cur(){ return S[L][i]; }
+function svgFor(item){
+  const id='p_'+item.id+'_'+Math.random().toString(36).slice(2,7);
+  let pattern='';
+  if(item.pattern==='gestipte'){
+    pattern=`<pattern id="${id}" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="18" height="18" fill="${item.color}"/>
+      <circle cx="5" cy="5" r="2.7" fill="#273142"/>
+      <circle cx="14" cy="13" r="2.7" fill="#273142"/>
+    </pattern>`;
+  } else if(item.pattern==='gestreepte'){
+    pattern=`<pattern id="${id}" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(25)">
+      <rect width="16" height="16" fill="${item.color}"/>
+      <rect width="5" height="16" fill="#273142" opacity=".78"/>
+    </pattern>`;
+  } else {
+    pattern=`<pattern id="${id}" width="22" height="22" patternUnits="userSpaceOnUse">
+      <rect width="22" height="22" fill="${item.color}"/>
+      <circle cx="11" cy="7" r="3" fill="#fff"/>
+      <circle cx="7" cy="11" r="3" fill="#fff"/>
+      <circle cx="15" cy="11" r="3" fill="#fff"/>
+      <circle cx="11" cy="15" r="3" fill="#fff"/>
+      <circle cx="11" cy="11" r="2.3" fill="#e45a78"/>
+    </pattern>`;
+  }
 
-function update(){
-  $('count').textContent=`Zin ${i+1} van ${S[L].length}`;
-  $('pic').textContent=cur()[1];
-  $('answer').textContent='Luister eerst. Zeg daarna de hele zin na.';
-  $('stats').textContent=`Vandaag: ${good} goed · ${done} / ${S[L].length}`;
-  $('bar').style.width=(done/S[L].length*100)+'%';
-  $('status').className='status';
-  $('status').innerHTML='💡 Luister goed en zeg de hele zin hardop na.';
+  let shape='';
+  if(item.type==='jas'){
+    shape=`<path d="M43 35 L58 22 L72 31 L86 22 L101 35 L118 61 L104 72 L94 56 L94 120 L50 120 L50 56 L40 72 L26 61 Z" fill="url(#${id})" stroke="#273142" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M72 31 L72 120" stroke="#273142" stroke-width="3"/><circle cx="67" cy="54" r="2.3"/><circle cx="67" cy="72" r="2.3"/><circle cx="67" cy="90" r="2.3"/>`;
+  } else if(item.type==='broek'){
+    shape=`<path d="M48 25 H98 L94 63 L90 122 H68 L72 69 L64 122 H42 L46 63 Z" fill="url(#${id})" stroke="#273142" stroke-width="3" stroke-linejoin="round"/>`;
+  } else if(item.type==='trui'){
+    shape=`<path d="M48 38 L61 26 Q72 34 85 26 L98 38 L119 63 L104 75 L94 59 L94 116 H52 L52 59 L42 75 L27 63 Z" fill="url(#${id})" stroke="#273142" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M61 26 Q72 43 85 26" fill="none" stroke="#273142" stroke-width="3"/>`;
+  } else {
+    shape=`<path d="M55 31 Q72 42 89 31 L98 50 L91 66 L112 120 H32 L53 66 L46 50 Z" fill="url(#${id})" stroke="#273142" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M55 31 Q72 48 89 31" fill="none" stroke="#273142" stroke-width="3"/>`;
+  }
+  return `<svg viewBox="0 0 145 140" aria-label="${item.label}"><defs>${pattern}</defs>${shape}</svg>`;
 }
 
-window.speak=()=>{
+function speak(text){
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(cur()[0]);
+  const u=new SpeechSynthesisUtterance(text);
   u.lang='nl-NL';
-  u.rate=.82;
+  u.rate=.78;
   speechSynthesis.speak(u);
-};
+}
 
-window.showAnswer=()=>{
-  $('answer').textContent=cur()[0];
-};
+function showModule(which){
+  document.getElementById('clothesModule').classList.toggle('hide',which!=='clothes');
+  document.getElementById('oldModule').classList.toggle('hide',which!=='old');
+  document.getElementById('tabClothes').classList.toggle('active',which==='clothes');
+  document.getElementById('tabOld').classList.toggle('active',which==='old');
+}
 
-window.next=()=>{
-  i=(i+1)%S[L].length;
-  update();
-};
+function renderCards(){
+  const grid=document.getElementById('clothesGrid');
+  grid.innerHTML='';
+  CLOTHES.forEach(item=>{
+    const hij=`Hij doet ${item.label} aan.`;
+    const zij=`Zij doet ${item.label} aan.`;
+    const el=document.createElement('div');
+    el.className='cloth-card';
+    el.innerHTML=`
+      <div class="svgbox">${svgFor(item)}</div>
+      <div class="cloth-title">${item.label}</div>
+      <div class="cloth-sent"><b>👦</b> ${hij}</div>
+      <div class="cloth-sent"><b>👧</b> ${zij}</div>
+      <div class="cloth-actions">
+        <button>🔊 Hij</button>
+        <button>🔊 Zij</button>
+      </div>`;
+    const buttons=el.querySelectorAll('button');
+    buttons[0].onclick=()=>speak(hij);
+    buttons[1].onclick=()=>speak(zij);
+    grid.appendChild(el);
+  });
+}
 
-window.setLevel=(n,b)=>{
-  L=n;i=0;good=0;done=0;
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on');
-  update();
-};
+function randomItem(){
+  return CLOTHES[Math.floor(Math.random()*CLOTHES.length)];
+}
 
-window.markGood=()=>{
-  good++;
-  done=Math.min(done+1,S[L].length);
-  $('status').className='status ok';
-  $('status').innerHTML='🌟 <b>Heel goed!</b> Ga naar de volgende zin.';
-  $('stats').textContent=`Vandaag: ${good} goed · ${done} / ${S[L].length}`;
-  $('bar').style.width=(done/S[L].length*100)+'%';
-};
+window.newCombo=()=>{
+  boyItem=randomItem();
+  do{girlItem=randomItem()}while(girlItem.id===boyItem.id);
+  document.getElementById('boyPic').innerHTML=svgFor(boyItem);
+  document.getElementById('girlPic').innerHTML=svgFor(girlItem);
+  document.getElementById('boyWord').textContent=boyItem.label;
+  document.getElementById('girlWord').textContent=girlItem.label;
+  document.getElementById('comboSentence').textContent='Zeg eerst zelf de hele zin.';
+}
 
-update();
+function comboText(){
+  return `Hij doet ${boyItem.label} aan en zij doet ${girlItem.label} aan.`;
+}
+window.speakCombo=()=>speak(comboText());
+window.showCombo=()=>document.getElementById('comboSentence').textContent=comboText();
+
+/* old practice */
+function updateOld(){
+  const cur=OLD[oldL][oldI];
+  document.getElementById('oldCount').textContent=`Zin ${oldI+1} van ${OLD[oldL].length}`;
+  document.getElementById('oldPic').textContent=cur[1];
+  document.getElementById('oldAnswer').textContent='Luister eerst. Zeg daarna de hele zin na.';
+  document.getElementById('oldStatus').innerHTML='💡 Luister goed en zeg de hele zin hardop na.';
+}
+window.setOldLevel=(n,b)=>{
+  oldL=n;oldI=0;
+  document.querySelectorAll('.levels button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');updateOld();
+}
+window.speakOld=()=>speak(OLD[oldL][oldI][0]);
+window.showOld=()=>document.getElementById('oldAnswer').textContent=OLD[oldL][oldI][0];
+window.nextOld=()=>{oldI=(oldI+1)%OLD[oldL].length;updateOld();}
+window.markOld=()=>{document.getElementById('oldStatus').innerHTML='🌟 <b>Heel goed!</b> Ga naar de volgende zin.';}
+
+renderCards();
+newCombo();
+updateOld();
 </script>
-
 </body>
 </html>
