@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f7fc">
+<title>Ayden · Cito letters oefenen</title>
+<style>
+:root{--navy:#253454;--ink:#203047;--muted:#6b778c;--line:#dce5f1;--bg:#f4f7fc;--blue:#dceafe;--green:#ddf5e6;--red:#ffe5e5;--yellow:#fff4cf}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}.wrap{max-width:760px;margin:auto;padding:18px 14px 60px}h1{margin:0;color:var(--navy);font-size:clamp(26px,5vw,36px)}.sub{color:var(--muted);font-size:14px;margin:3px 0 14px}.panel{background:white;border-radius:20px;padding:18px;box-shadow:0 5px 22px #1e3a5f10;margin-bottom:14px}.intro{background:var(--yellow);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5}.row{display:flex;gap:9px;flex-wrap:wrap}.level{flex:1;min-width:125px;border:2px solid var(--line);background:#f7f9fc;border-radius:13px;padding:11px 8px;font-weight:800;color:#41506a}.level.active{background:var(--navy);color:white;border-color:var(--navy)}.settings-title{font-size:13px;font-weight:800;color:var(--muted);margin:14px 0 7px;text-transform:uppercase;letter-spacing:.4px}.custom{width:100%;border:2px solid var(--line);border-radius:12px;padding:11px 12px;color:var(--ink)}.start{width:100%;border:0;border-radius:14px;padding:13px;background:var(--navy);color:white;font-weight:900;font-size:17px;margin-top:12px}.topline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.progress{font-size:14px;font-weight:800;color:var(--muted)}.score{font-size:14px;font-weight:900;color:#2b6a4b}.listen-card{background:#f7fbff;border:2px solid #d9e7f7;border-radius:20px;min-height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:12px 0 18px}.headphones{font-size:72px}.listen-btn{border:0;background:var(--blue);color:#174b80;border-radius:13px;padding:12px 19px;font-weight:900;font-size:17px}.hint{font-size:13px;color:var(--muted);margin-top:8px}.answer-wrap{text-align:center}.answer-label{font-size:13px;color:var(--muted);font-weight:800;margin-bottom:8px}.answer-input{width:min(260px,90%);height:78px;text-align:center;border:3px solid #b8c8dc;border-radius:15px;font-size:42px;font-weight:900;letter-spacing:5px;color:var(--navy);text-transform:lowercase;background:white}.answer-input:focus{outline:none;border-color:#2c6fd6;box-shadow:0 0 0 4px #dceafe}.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}.actions button{border:0;border-radius:12px;padding:12px;font-weight:900}.check{background:var(--green);color:#175d3e}.skip{background:#edf1f5;color:#45546a}.feedback{text-align:center;min-height:35px;font-size:20px;font-weight:900;margin:13px 0 0}.correct{color:#258657}.wrong{color:#c64848}.reveal{text-align:center;color:var(--muted);min-height:25px;font-size:14px}.next{width:100%;border:0;border-radius:13px;padding:12px;background:#e8eef8;color:var(--navy);font-weight:900;margin-top:9px}.hidden{display:none!important}.result{text-align:center}.result .big{font-size:46px;font-weight:900;color:var(--navy);margin:6px 0}.mistakes{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:12px 0}.chip{background:#fff0f0;border:1px solid #ffd0d0;border-radius:10px;padding:6px 10px;font-weight:900}.restart{width:100%;border:0;border-radius:13px;padding:12px;background:var(--navy);color:white;font-weight:900}.small{font-size:13px;color:var(--muted);line-height:1.45}@media(max-width:520px){.panel{padding:14px}.actions{grid-template-columns:1fr}.answer-input{height:72px;font-size:38px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🎧 Ayden · Cito letters oefenen</h1>
+<div class="sub">Alleen letters en lettercombinaties · nog geen woorden</div>
+<section id="setup" class="panel">
+<div class="intro"><b>Zo oefenen we nu:</b><br>Luister → schrijf zelf de letter(s) → controleer.<br>Geen meerkeuze en geen woorden spellen.</div>
+<div class="settings-title">Kies een niveau</div>
+<div class="row">
+<button class="level active" data-level="basic">1 · losse letters</button>
+<button class="level" data-level="thisweek">2 · h · eu · g</button>
+<button class="level" data-level="sounds">3 · klanken</button>
+<button class="level" data-level="mixed">4 · gemengd</button>
+</div>
+<div class="settings-title">Eigen set (optioneel)</div>
+<input id="customSet" class="custom" placeholder="bijv. h, eu, g, m, s, aa">
+<div class="small">Als je hier iets invult, gebruikt de oefening alleen jouw eigen lijst.</div>
+<div class="settings-title">Aantal vragen</div>
+<div class="row"><button class="level q active" data-q="10">10</button><button class="level q" data-q="15">15</button><button class="level q" data-q="20">20</button></div>
+<button id="startBtn" class="start">Start oefenen</button>
+</section>
+<section id="quiz" class="panel hidden">
+<div class="topline"><div id="progress" class="progress">1 / 10</div><div id="score" class="score">0 goed</div></div>
+<div class="listen-card"><div class="headphones">🎧</div><button id="listenBtn" class="listen-btn">🔊 Luister 3×</button><div class="hint">De letter staat niet op het scherm.</div></div>
+<div class="answer-wrap"><div class="answer-label">Schrijf wat je hoort:</div><input id="answer" class="answer-input" autocomplete="off" autocapitalize="none" spellcheck="false" inputmode="text"></div>
+<div class="actions"><button id="checkBtn" class="check">✓ Controleer</button><button id="againBtn" class="skip">🔁 Nog eens luisteren</button></div>
+<div id="feedback" class="feedback"></div><div id="reveal" class="reveal"></div><button id="nextBtn" class="next hidden">Volgende →</button>
+</section>
+<section id="done" class="panel hidden result">
+<div>🏁 Klaar!</div><div id="finalScore" class="big"></div><div id="resultText"></div>
+<div id="mistakeWrap" class="hidden"><div class="settings-title">Nog even oefenen</div><div id="mistakes" class="mistakes"></div></div>
+<button id="retryWrong" class="restart hidden">Oefen alleen de foutjes</button><button id="restartBtn" class="next">Nieuwe ronde</button>
+</section>
+</div>
+<script>
+const SETS={
+basic:['m','r','v','i','s','p','e','t','n','b','d','k','z','h','w','u','j','g','l','f'],
+thisweek:['h','eu','g'],
+sounds:['aa','ee','oo','uu','oe','ie','eu','ui','ei','ij','ou','au','ng','nk','ch'],
+mixed:['m','r','v','i','s','p','e','t','n','b','d','k','z','h','w','u','j','g','l','f','aa','ee','oo','uu','oe','ie','eu','ui']
+};
+let selectedLevel='basic',questionCount=10,questions=[],index=0,good=0,wrong=[];let dutchVoice=null,speechToken=0;const $=id=>document.getElementById(id);
+function chooseVoice(){if(!('speechSynthesis'in window))return;const voices=speechSynthesis.getVoices();const nl=voices.filter(v=>(v.lang||'').toLowerCase().startsWith('nl'));dutchVoice=nl.find(v=>/natural|premium|enhanced|xander|ellen|siri/i.test(v.name||''))||nl.find(v=>v.localService)||nl[0]||null}
+if('speechSynthesis'in window){chooseVoice();speechSynthesis.addEventListener('voiceschanged',chooseVoice)}
+function stopSpeech(){speechToken++;if('speechSynthesis'in window)speechSynthesis.cancel()}
+function speakUnit(text){stopSpeech();if(!('speechSynthesis'in window))return alert('Gebruik Chrome, Edge of Safari voor de Nederlandse stem.');const token=speechToken;let i=0;function next(){if(token!==speechToken||i>=3)return;const u=new SpeechSynthesisUtterance(text);u.lang='nl-NL';if(dutchVoice)u.voice=dutchVoice;u.rate=.53;u.pitch=1;u.volume=1;i++;u.onend=()=>{if(token===speechToken)setTimeout(next,500)};u.onerror=()=>{if(token===speechToken)setTimeout(next,500)};speechSynthesis.speak(u)}next()}
+function sample(arr,n){const out=[];while(out.length<n){const batch=[...arr].sort(()=>Math.random()-.5);for(const x of batch){if(out.length<n)out.push(x)}}return out}
+function start(customList=null){const custom=$('customSet').value.split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);const source=customList||(custom.length?custom:SETS[selectedLevel]);questions=sample(source,questionCount);index=0;good=0;wrong=[];$('setup').classList.add('hidden');$('done').classList.add('hidden');$('quiz').classList.remove('hidden');renderQuestion()}
+function renderQuestion(){$('progress').textContent=(index+1)+' / '+questions.length;$('score').textContent=good+' goed';$('answer').value='';$('answer').disabled=false;$('feedback').textContent='';$('feedback').className='feedback';$('reveal').textContent='';$('nextBtn').classList.add('hidden');$('checkBtn').disabled=false;$('answer').focus();setTimeout(()=>speakUnit(questions[index]),220)}
+function check(){const expected=questions[index];const got=$('answer').value.trim().toLowerCase();if(!got){$('feedback').textContent='Schrijf eerst wat je hoort.';return}$('answer').disabled=true;$('checkBtn').disabled=true;if(got===expected){good++;$('score').textContent=good+' goed';$('feedback').textContent='✅ Goed!';$('feedback').className='feedback correct'}else{wrong.push(expected);$('feedback').textContent='Nog niet helemaal.';$('feedback').className='feedback wrong';$('reveal').textContent='Goed antwoord: '+expected}$('nextBtn').classList.remove('hidden')}
+function next(){index++;if(index>=questions.length)finish();else renderQuestion()}
+function finish(){stopSpeech();$('quiz').classList.add('hidden');$('done').classList.remove('hidden');$('finalScore').textContent=good+' / '+questions.length;$('resultText').textContent=good===questions.length?'Perfect! 🌟':'Goed geoefend. De foutjes kunnen we nog een keer doen.';const unique=[...new Set(wrong)];$('mistakes').innerHTML='';unique.forEach(x=>{const d=document.createElement('div');d.className='chip';d.textContent=x;$('mistakes').appendChild(d)});$('mistakeWrap').classList.toggle('hidden',unique.length===0);$('retryWrong').classList.toggle('hidden',unique.length===0);$('retryWrong').onclick=()=>{questionCount=Math.max(unique.length,Math.min(10,unique.length*2));start(unique)}}
+document.querySelectorAll('.level[data-level]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.level[data-level]').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedLevel=b.dataset.level});document.querySelectorAll('.q').forEach(b=>b.onclick=()=>{document.querySelectorAll('.q').forEach(x=>x.classList.remove('active'));b.classList.add('active');questionCount=Number(b.dataset.q)});
+$('startBtn').onclick=()=>start();$('listenBtn').onclick=()=>speakUnit(questions[index]);$('againBtn').onclick=()=>speakUnit(questions[index]);$('checkBtn').onclick=check;$('nextBtn').onclick=next;$('restartBtn').onclick=()=>{stopSpeech();$('done').classList.add('hidden');$('setup').classList.remove('hidden')};$('answer').addEventListener('keydown',e=>{if(e.key==='Enter'){if(!$('nextBtn').classList.contains('hidden'))next();else check()}});
+</script>
+</body>
+</html>
